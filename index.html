@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Paintbrush</title>
+  <style>
+    body { margin: 0; display: flex; flex-direction: column; align-items: center; background: #222; color: white; }
+    .container { position: relative; width: 640px; height: 480px; margin-top: 20px; }
+    #video, #canvas { position: absolute; width: 640px; height: 480px; transform: scaleX(-1); border-radius: 10px; }
+    button { margin-top: 20px; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
+  </style>
+  <script src="https://unpkg.com" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com" crossorigin="anonymous"></script>
+</head>
+<body>
+  <h1>AI Virtual Paintbrush</h1>
+  <div class="container">
+    <video id="video" autoplay></video>
+    <canvas id="canvas" width="640" height="480"></canvas>
+  </div>
+  <button onclick="clearCanvas()">Clear Canvas</button>
+  <script src="script.js"></script>
+</body>
+</html>
