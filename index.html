@@ -2,12 +2,12 @@
 <html>
 <head>
   <title>AI Virtual Paintbrush</title>
+
   <link rel="stylesheet" href="style.css">
-  <!-- ✅ Correct MediaPipe Scripts -->
+
+  <!-- MediaPipe -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
-
 </head>
 
 <body>
@@ -20,7 +20,10 @@
     <canvas id="overlayCanvas" width="640" height="480"></canvas>
   </div>
 
-  <button onclick="clearCanvas()">Clear Canvas</button>
+  <div class="buttons">
+    <button onclick="clearCanvas()">Clear</button>
+    <button onclick="saveImage()">Save</button>
+  </div>
 
   <script src="script.js"></script>
 
