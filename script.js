@@ -1,37 +1,82 @@
 const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+const drawCanvas = document.getElementById('drawCanvas');
+const overlayCanvas = document.getElementById('overlayCanvas');
 
-let lastX = 0, lastY = 0, isDrawing = false;
+const drawCtx = drawCanvas.getContext('2d');
+const overlayCtx = overlayCanvas.getContext('2d');
 
+let lastX = 0;
+let lastY = 0;
+let isDrawing = false;
+
+// ✅ Initialize MediaPipe Hands
 const hands = new Hands({
-  locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+  locateFile: (file) =>
+    `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
 });
-hands.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
 
+hands.setOptions({
+  maxNumHands: 1,
+  modelComplexity: 1,
+  minDetectionConfidence: 0.5,
+  minTrackingConfidence: 0.5
+});
+
+// ✅ Hand tracking logic
 hands.onResults((results) => {
-  ctx.save();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+
+  // Clear only overlay
+  overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+
+  // Draw camera feed
+  overlayCtx.drawImage(results.image, 0, 0, overlayCanvas.width, overlayCanvas.height);
 
   if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+
     const landmarks = results.multiHandLandmarks[0];
-    const x = landmarks[8].x * canvas.width; // Index finger tip
-    const y = landmarks[8].y * canvas.height;
 
+    const x = landmarks[8].x * drawCanvas.width;
+    const y = landmarks[8].y * drawCanvas.height;
+
+    // Draw pointer (yellow dot)
+    overlayCtx.fillStyle = "yellow";
+    overlayCtx.beginPath();
+    overlayCtx.arc(x, y, 5, 0, 2 * Math.PI);
+    overlayCtx.fill();
+
+    // Draw persistent line
     if (isDrawing) {
-      ctx.strokeStyle = "red"; ctx.lineWidth = 8; ctx.lineCap = "round";
-      ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(x, y); ctx.stroke();
+      drawCtx.strokeStyle = "red";
+      drawCtx.lineWidth = 5;
+      drawCtx.lineCap = "round";
+
+      drawCtx.beginPath();
+      drawCtx.moveTo(lastX, lastY);
+      drawCtx.lineTo(x, y);
+      drawCtx.stroke();
     }
-    lastX = x; lastY = y; isDrawing = true;
-  } else { isDrawing = false; }
-  ctx.restore();
+
+    lastX = x;
+    lastY = y;
+    isDrawing = true;
+
+  } else {
+    isDrawing = false;
+  }
 });
 
+// ✅ Start camera
 const camera = new Camera(video, {
-  onFrame: async () => { await hands.send({image: video}); },
-  width: 640, height: 480
+  onFrame: async () => {
+    await hands.send({ image: video });
+  },
+  width: 640,
+  height: 480
 });
+
 camera.start();
 
-function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+// ✅ Clear button
+function clearCanvas() {
+  drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+}
