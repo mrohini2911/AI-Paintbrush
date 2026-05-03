@@ -15,6 +15,7 @@ body {
   margin-top: 20px;
 }
 
+/* All layers */
 video, canvas {
   position: absolute;
   width: 640px;
@@ -23,12 +24,18 @@ video, canvas {
   border-radius: 10px;
 }
 
+/* Correct layering */
+video {
+  z-index: 0;
+}
+
 #drawCanvas {
-  z-index: 1;
+  z-index: 1;   /* Drawing visible */
 }
 
 #overlayCanvas {
-  z-index: 2;
+  z-index: 2;   /* Pointer only */
+  background: transparent;
 }
 
 .buttons {
