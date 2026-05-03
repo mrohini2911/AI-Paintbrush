@@ -5,7 +5,7 @@ body {
   align-items: center;
   background: #222;
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
 }
 
 .container {
@@ -31,12 +31,16 @@ video, canvas {
   z-index: 2;
 }
 
-button {
+.buttons {
   margin-top: 20px;
+}
+
+button {
   padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
+  margin: 5px;
   border: none;
+  border-radius: 5px;
+  cursor: pointer;
   background: orange;
   font-weight: bold;
 }
