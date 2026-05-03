@@ -5,9 +5,8 @@ const ctx = canvas.getContext('2d');
 let lastX = 0, lastY = 0, isDrawing = false;
 
 const hands = new Hands({
-  locateFile: (file) => `https://unpkg.com{file}`
+  locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
 });
-
 hands.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
 
 hands.onResults((results) => {
