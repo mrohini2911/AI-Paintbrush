@@ -25,7 +25,6 @@ hands.setOptions({
 // Hand tracking
 hands.onResults((results) => {
 
-  // ❗ ONLY clear overlay (not drawing canvas)
   overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
 
   if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
@@ -35,35 +34,46 @@ hands.onResults((results) => {
     const x = landmarks[8].x * drawCanvas.width;
     const y = landmarks[8].y * drawCanvas.height;
 
-    // Yellow pointer
+    const thumbX = landmarks[4].x * drawCanvas.width;
+    const thumbY = landmarks[4].y * drawCanvas.height;
+
+    // Distance between thumb & index
+    const distance = Math.hypot(x - thumbX, y - thumbY);
+
+    // Draw pointer
     overlayCtx.fillStyle = "yellow";
     overlayCtx.beginPath();
     overlayCtx.arc(x, y, 6, 0, 2 * Math.PI);
     overlayCtx.fill();
 
-    // Drawing logic
-    drawCtx.strokeStyle = "red";
-    drawCtx.lineWidth = 8;
-    drawCtx.lineCap = "round";
+    // 🔥 Pinch = DRAW
+    if (distance < 40) {
 
-    if (!isDrawing) {
+      drawCtx.strokeStyle = "red";
+      drawCtx.lineWidth = 6;
+      drawCtx.lineCap = "round";
+
+      if (!isDrawing) {
+        lastX = x;
+        lastY = y;
+        isDrawing = true;
+      }
+
+      drawCtx.beginPath();
+      drawCtx.moveTo(lastX, lastY);
+      drawCtx.lineTo(x, y);
+      drawCtx.stroke();
+
       lastX = x;
       lastY = y;
-      isDrawing = true;
+
+    } else {
+      // ✋ Open hand = STOP drawing
+      isDrawing = false;
     }
-
-    drawCtx.beginPath();
-    drawCtx.moveTo(lastX, lastY);
-    drawCtx.lineTo(x, y);
-    drawCtx.stroke();
-
-    lastX = x;
-    lastY = y;
 
   } else {
     isDrawing = false;
-    lastX = 0;
-    lastY = 0;
   }
 });
 
