@@ -1,29 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Paintbrush</title>
+  <title>AI Virtual Paintbrush</title>
+
   <style>
-    body { margin: 0; display: flex; flex-direction: column; align-items: center; background: #222; color: white; }
-    .container { position: relative; width: 640px; height: 480px; margin-top: 20px; }
-    #video, #canvas { position: absolute; width: 640px; height: 480px; transform: scaleX(-1); border-radius: 10px; }
-    button { margin-top: 20px; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #222;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      position: relative;
+      width: 640px;
+      height: 480px;
+      margin-top: 20px;
+    }
+
+    video, canvas {
+      position: absolute;
+      width: 640px;
+      height: 480px;
+      transform: scaleX(-1);
+      border-radius: 10px;
+    }
+
+    #drawCanvas {
+      z-index: 1;
+    }
+
+    #overlayCanvas {
+      z-index: 2;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+      background: orange;
+      font-weight: bold;
+    }
   </style>
-  <!-- MediaPipe Hands -->
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 
-<!-- Camera Utils -->
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <!-- ✅ Correct MediaPipe Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
 
-<!-- Drawing Utils -->
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
 </head>
+
 <body>
+
   <h1>AI Virtual Paintbrush</h1>
+
   <div class="container">
     <video id="video" autoplay></video>
-    <canvas id="canvas" width="640" height="480"></canvas>
+    <canvas id="drawCanvas" width="640" height="480"></canvas>
+    <canvas id="overlayCanvas" width="640" height="480"></canvas>
   </div>
+
   <button onclick="clearCanvas()">Clear Canvas</button>
+
   <script src="script.js"></script>
+
 </body>
 </html>
