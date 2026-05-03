@@ -8,10 +8,14 @@
     #video, #canvas { position: absolute; width: 640px; height: 480px; transform: scaleX(-1); border-radius: 10px; }
     button { margin-top: 20px; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
   </style>
-  <!-- Add crossorigin="anonymous" to all three scripts -->
-  <script src="https://unpkg.com" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com" crossorigin="anonymous"></script>
+  <!-- MediaPipe Hands -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+<!-- Camera Utils -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+<!-- Drawing Utils -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
 </head>
 <body>
   <h1>AI Virtual Paintbrush</h1>
