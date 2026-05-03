@@ -45,20 +45,25 @@ hands.onResults((results) => {
     overlayCtx.fill();
 
     // Draw persistent line
-    if (isDrawing) {
-      drawCtx.strokeStyle = "red";
-      drawCtx.lineWidth = 5;
-      drawCtx.lineCap = "round";
+   if (!isDrawing) {
+  // First point
+  lastX = x;
+  lastY = y;
+  isDrawing = true;
+}
 
-      drawCtx.beginPath();
-      drawCtx.moveTo(lastX, lastY);
-      drawCtx.lineTo(x, y);
-      drawCtx.stroke();
-    }
+// Always draw line
+drawCtx.strokeStyle = "red";
+drawCtx.lineWidth = 5;
+drawCtx.lineCap = "round";
 
-    lastX = x;
-    lastY = y;
-    isDrawing = true;
+drawCtx.beginPath();
+drawCtx.moveTo(lastX, lastY);
+drawCtx.lineTo(x, y);
+drawCtx.stroke();
+
+lastX = x;
+lastY = y;
 
   } else {
     isDrawing = false;
