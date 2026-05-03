@@ -25,11 +25,8 @@ hands.setOptions({
 // Hand tracking
 hands.onResults((results) => {
 
-  // Clear overlay only
+  // ❗ ONLY clear overlay (not drawing canvas)
   overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-
-  // Draw camera feed
-  overlayCtx.drawImage(results.image, 0, 0, overlayCanvas.width, overlayCanvas.height);
 
   if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
 
@@ -44,7 +41,7 @@ hands.onResults((results) => {
     overlayCtx.arc(x, y, 6, 0, 2 * Math.PI);
     overlayCtx.fill();
 
-    // Drawing
+    // Drawing logic
     drawCtx.strokeStyle = "red";
     drawCtx.lineWidth = 8;
     drawCtx.lineCap = "round";
@@ -81,12 +78,12 @@ const camera = new Camera(video, {
 
 camera.start();
 
-// Clear canvas
+// Clear
 function clearCanvas() {
   drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
 }
 
-// Save image
+// Save
 function saveImage() {
   const link = document.createElement('a');
   link.download = 'painting.png';
